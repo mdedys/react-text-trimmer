@@ -48,15 +48,13 @@ class TextTrim extends React.Component {
 TextTrim.propTypes = {
 	className: PropTypes.string,
 	textTail: PropTypes.string,
-	dangerouslySetInnerHTML: PropTypes.object,
-	showTooltip: PropTypes.bool
+	dangerouslySetInnerHTML: PropTypes.object
 };
 
 TextTrim.defaultProps = {
 	className: '',
 	textTail: '...',
-	dangerouslySetInnerHTML: null,
-	showTooltip: false
+	dangerouslySetInnerHTML: null
 };
 
 export default TextTrim;
