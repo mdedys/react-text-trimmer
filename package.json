@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mdedys/react-text-trim.git"
+    "url": "git+https://github.com/mdedys/react-text-trimmer.git"
   },
   "keywords": [
     "trim",
@@ -21,9 +21,9 @@
   "author": "Michal Dedys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mdedys/react-text-trim/issues"
+    "url": "https://github.com/mdedys/react-text-trimmer/issues"
   },
-  "homepage": "https://github.com/mdedys/react-text-trim#readme",
+  "homepage": "https://github.com/mdedys/react-text-trimmer#readme",
   "peerDependencies": {
     "react": ">= 0.14.0",
     "react-dom": ">= 0.14.0"
