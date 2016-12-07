@@ -29,8 +29,7 @@ Wrap the text you want trimmed with react-text-trim. The component will inherit 
 
 ### Example
 
-```js
-
+```
 //Sass
 
 // Will trim text after 3 lines of text
@@ -38,8 +37,9 @@ Wrap the text you want trimmed with react-text-trim. The component will inherit 
 	line-height: 1.4em;
 	max-height: 4.2em;
 }
+```
 
-
+```js
 import TextTrim from 'react-text-trim';
 
 <div className = 'my-text'>
