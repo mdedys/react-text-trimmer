@@ -16,7 +16,15 @@ npm install react-text-trim
 
 ## Usage
 
-Wrap the text you want trimmed with react-text-trim. The component will inherit the width, max-height, line-height and trim the text. The default tail added to the text is `...` but anything string can be specified.
+### Props
+
+`className`: CSS class name to add specific styling
+
+`textTail`: String to append to end of trimmed text
+
+`dangerouslySetInnerHTML`: Used when HTML is needed to be rendered and not converted to string. If this is set, any thing wrapped will not by the component will be ignored.
+
+Wrap the text you want trimmed with react-text-trim. The component will inherit the width, max-height, line-height and trim the text. The default tail added to the text is `...` but any string can be specified.
 
 ### Example
 
