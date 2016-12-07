@@ -1,6 +1,7 @@
 [![NPM version][npm-image]][npm-url]
 [![Build status][ci-image]][ci-url]
-[![Dependency Status][dependencies-image]][dependencies-url]
+[![devDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/dev-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=dev)
+[![peerDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/peer-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=peer)
 
 # react-text-trimmer
 
@@ -57,6 +58,4 @@ This repository is configured with [EditorConfig][EditorConfig].
 [npm-image]: https://img.shields.io/npm/v/react-text-trimmer.png
 [ci-url]: https://travis-ci.org/mdedys/react-text-trimmer
 [ci-image]: https://img.shields.io/travis-ci/mdedys/react-text-trimmer.svg
-[dependencies-url]: https://david-dm.org/mdedys/react-text-trimmer
-[dependencies-image]: https://img.shields.io/david/mdedys/react-text-trimmer.svg
 [EditorConfig]: http://editorconfig.org/
