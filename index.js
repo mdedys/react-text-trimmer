@@ -1,1 +1,1 @@
-module.exports = require( './lib/textTrim.js' );
+module.exports = require( './lib/trimmer.js' );

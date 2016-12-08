@@ -40,12 +40,12 @@ Wrap the text you want trimmed with react-text-trim. The component will inherit 
 ```
 
 ```js
-import TextTrim from 'react-text-trim';
+import Trimmer from 'react-text-trim';
 
 <div className = 'my-text'>
-	<TextTrim>
+	<Trimmer>
  		Some text to be truncated
-	</TextTrim>
+	</Trimmer>
 </div>
 
 ```
