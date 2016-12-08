@@ -47,6 +47,7 @@ class TextTrim extends React.Component {
 
 		const style = {
 			lineHeight: 'inherit',
+			height: 'inherit',
 			maxHeight: 'inherit',
 			width: 'inherit',
 			overflow: 'hidden'
