@@ -33,6 +33,7 @@ describe( '<Trimmer/>', () => {
 
 		const style = {
 			lineHeight: 'inherit',
+			height: 'inherit',
 			maxHeight: 'inherit',
 			width: 'inherit',
 			overflow: 'hidden'
