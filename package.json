@@ -52,5 +52,8 @@
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.2"
+  },
+  "dependencies": {
+    "shortid": "^2.2.6"
   }
 }

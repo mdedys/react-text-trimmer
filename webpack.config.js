@@ -17,12 +17,14 @@ module.exports = {
 	],
 	module: {
 		loaders : [{
+
 			test    : /\.js$/,
 			loaders : [ 'react-hot', 'babel' ],
 			include : [
 				path.join( __dirname, 'src' ),
 				path.join( __dirname, 'demo' )
 			]
+
 		}]
 	}
 };
