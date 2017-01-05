@@ -23,27 +23,15 @@ npm install react-text-trim
 
 `textTail`: String to append to end of trimmed text
 
-`dangerouslySetInnerHTML`: Used when HTML is needed to be rendered and not converted to string. If this is set, any thing wrapped will not by the component will be ignored.
-
-Wrap the text you want trimmed with react-text-trim. The component will inherit the width, max-height, line-height and trim the text. The default tail added to the text is `...` but any string can be specified.
+`maxLines`: Number of lines to render before truncating text
 
 ### Example
-
-```
-//Sass
-
-// Will trim text after 3 lines of text
-.my-text {
-	line-height: 1.4em;
-	max-height: 4.2em;
-}
-```
 
 ```js
 import Trimmer from 'react-text-trim';
 
 <div className = 'my-text'>
-	<Trimmer>
+	<Trimmer maxLines = {2} textTail = '...' >
  		Some text to be truncated
 	</Trimmer>
 </div>
