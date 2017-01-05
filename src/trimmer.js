@@ -1,73 +1,179 @@
 import React, { PropTypes } from 'react';
+import ShortId 				from 'shortid';
 
 class TextTrim extends React.Component {
 
 	constructor( props ) {
 		super( props );
-		this.renderDangerously = props.dangerouslySetInnerHTML ? true : false;
-		this.textTailRegex = new RegExp( ".(" + props.textTail + ")?$" );
+
+		let lineIds = [];
+		for ( let i = 0; i < props.maxLines; i++ ) {
+			lineIds.push( ShortId.generate() );
+		}
+
+		this.state = {
+			parentWidth: null,
+			lineIds: lineIds
+		}
+
+		this.resize = this.resize.bind(this);
+		this.measureText = this.measureText.bind(this);
 	}
 
 	componentDidMount() {
-		this.trim();
+
+		let canvas = document.createElement( 'canvas' );
+		this.canvas = canvas.getContext( '2d' );
+
+		window.addEventListener( 'resize', this.resize );
+
+		this.resize();
 	}
 
-	componentDidUpdate() {
-		this.trim();
+	componentWillUnmount() {
+		window.removeEventListener( 'resize', this.resize );
 	}
 
-	trim() {
-		const domProperty = this.renderDangerously ? 'innerHTML' : 'textContent';
-		const element = this.refs.trimmer;
-		const regex = this.textTailRegex;
-		const textTail = this.props.textTail;
+	shouldComponentUpdate( nextProps, nextState ) {
+		return nextProps.children !== this.props.children ||
+			nextProps.textTail !== this.props.textTail ||
+			nextProps.maxLines !== this.props.maxLines ||
+			nextState.parentWidth !== this.state.parentWidth
+	}
 
-		let textTruncated = false;
-		while ( element.scrollHeight - ( element.clientHeight || element.offsetHeight ) >= 1 ) {
-			textTruncated = true;
-			if ( element.contentText === textTail ) {
+	resize() {
+		const { trimmer } = this.refs;
+
+		const style = window.getComputedStyle( this.refs.trimmer.parentNode );
+
+		const font = [
+			style['font-weight'],
+			style['font-style'],
+			style['font-size'],
+			style['font-family']
+		].join(' ');
+
+		this.canvas.font = font;
+
+		this.setState({
+			parentWidth: this.refs.trimmer.parentNode.getBoundingClientRect().width
+		});
+	}
+
+	renderLines() {
+		const { trimmer, text } = this.refs;
+		const { children, maxLines } = this.props;
+
+		let linesOfText = [];
+		let textLines = children.split( '\n' );
+
+		let didTextFit = false;
+		let index = 1;
+
+		while( index <= maxLines ) {
+
+			let line = textLines.shift();
+			let isLastLine = index === maxLines;
+
+			if ( !line ) {
+				didTextFit = true;
 				break;
 			}
-			element[domProperty] = element[domProperty].replace( regex, textTail );
+
+			let shouldAppendToLine = index === linesOfText.length;
+			if ( shouldAppendToLine ) {
+				line = linesOfText[index - 1] + ' ' + line
+			}
+
+			let lineLength = this.measureText( line );
+			let isTextTooLong = lineLength >= this.state.parentWidth;
+
+			if ( !isTextTooLong ) {
+				this.updateLinesOfText( linesOfText, line, shouldAppendToLine );
+				continue;
+			}
+
+			let { newLine, leftOverText } = this.trimLine( line, lineLength, isLastLine, index );
+
+			if ( !isLastLine ) {
+				textLines = [leftOverText, ...textLines];
+			}
+
+			this.updateLinesOfText( linesOfText, newLine, shouldAppendToLine, index );
+			index++;
 		}
 
-		if ( !textTruncated ) {
-			return;
+		if ( !didTextFit ) {
+			linesOfText[linesOfText.length - 1] += this.props.textTail;
 		}
 
-		const tailLength = textTail.length + 1;
-		// If last character is trailing space, remove it.
-		if ( element.textContent[element.textContent.length - tailLength] === ' ' ) {
-			element[domProperty] =
-				element[domProperty].substring( 0, element[domProperty].length - tailLength ) + textTail;
+
+		let truncatedText = '';
+		for( let i = 0; i < linesOfText.length; i++ ) {
+			truncatedText += linesOfText[i] + ' '
 		}
+
+		return truncatedText;
+	}
+
+	trimLine( line, lineLength, isLastLine ) {
+
+		let words = line.split( ' ' );
+		let start = 0;
+		let end = words.length - 1;
+		let mid = 0;
+		let newline = '';
+		let tail = isLastLine ? this.props.textTail : '';
+
+		while ( start <= end ) {
+
+			mid = Math.floor( ( start + end ) / 2 );
+
+			newline = words.slice( 0, mid + 1 ).join( ' ' );
+
+			lineLength = this.measureText( newline + tail );
+
+			if ( lineLength <= this.state.parentWidth ) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+		}
+
+		if ( end === 0 ) {
+			end = 1;
+		}
+
+		return {
+			newLine: words.slice( 0, end ).join( ' ' ),
+			leftOverText: words.slice( end, words.length ).join( ' ' )
+		}
+	}
+
+	updateLinesOfText( linesOfText, newLine, shouldAppendToLine, index ) {
+		if ( shouldAppendToLine ) {
+			linesOfText[index - 1] = newLine;
+		} else {
+			linesOfText.push( newLine );
+		}
+	}
+
+	measureText( text ) {
+		return this.canvas.measureText( text ).width;
 	}
 
 	render() {
 
-		const style = {
-			lineHeight: 'inherit',
-			height: 'inherit',
-			maxHeight: 'inherit',
-			width: 'inherit',
-			overflow: 'hidden'
-		};
+		let text = '';
 
-		if ( !this.renderDangerously ) {
-
-			return (
-				<div ref = 'trimmer' className = { this.props.className } style = { style } >
-					{ this.props.children }
-				</div>
-			);
+		if ( this.state.parentWidth ) {
+			text = this.renderLines()
 		}
 
 		return (
-			<div
-				ref = 'trimmer'
-				className = { this.props.className }
-				style = { style }
-				dangerouslySetInnerHTML = { this.props.dangerouslySetInnerHTML } />
+			<div ref = 'trimmer' className = { this.props.className }>
+				{ text }
+			</div>
 		);
 	}
 }
@@ -75,13 +181,13 @@ class TextTrim extends React.Component {
 TextTrim.propTypes = {
 	className: PropTypes.string,
 	textTail: PropTypes.string,
-	dangerouslySetInnerHTML: PropTypes.object
+	maxLines: PropTypes.number
 };
 
 TextTrim.defaultProps = {
 	className: '',
 	textTail: '...',
-	dangerouslySetInnerHTML: null
+	maxLines: 3
 };
 
 export default TextTrim;
