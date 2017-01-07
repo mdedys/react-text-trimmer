@@ -1,5 +1,6 @@
 [![NPM version][npm-image]][npm-url]
 [![Build status][ci-image]][ci-url]
+[![dependencies Status](https://david-dm.org/mdedys/react-text-trimmer/status.svg)](https://david-dm.org/mdedys/react-text-trimmer)
 [![devDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/dev-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=dev)
 [![peerDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/peer-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=peer)
 
@@ -19,11 +20,11 @@ npm install react-text-trim
 
 ### Props
 
-`className`: CSS class name to add specific styling
+`className` : *default* : `empty string` CSS class name to add specific styling
 
-`textTail`: String to append to end of trimmed text
+`textTail`  : *default* : `...` String to append to end of trimmed text
 
-`maxLines`: Number of lines to render before truncating text
+`maxLines`  : *default* : `3` Number of lines to render before truncating text
 
 ### Example
 
