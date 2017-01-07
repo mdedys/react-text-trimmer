@@ -10,65 +10,79 @@ describe( '<Trimmer/>', () => {
 
 	it( 'should have default props set', () => {
 		const wrapper = shallow( <Trimmer /> );
-		wrapper.instance().props.className.should.equal( '' );
-		wrapper.instance().props.textTail.should.equal( '...' );
-		should.not.exist( wrapper.instance().props.dangerouslySetInnerHTML );
+		wrapper.instance().props.className.should.equal('');
+		wrapper.instance().props.textTail.should.equal('...');
+		wrapper.instance().props.maxLines.should.equal(3);
 	});
 
 	it( 'should have className and textTail set properly when passed', () => {
 		const className = 'testClassName';
 		const textTail = 'abc';
+		const maxLines = 1;
 
 		const wrapper = shallow(
-			<Trimmer className = { className } textTail = { textTail } />
+			<Trimmer className = {className} textTail = {textTail} maxLines = {maxLines}/>
 		);
 
-		wrapper.instance().props.className.should.equal( className );
-		wrapper.instance().props.textTail.should.equal( textTail );
+		wrapper.instance().props.className.should.equal(className);
+		wrapper.instance().props.textTail.should.equal(textTail);
+		wrapper.instance().props.maxLines.should.equal(maxLines);
 	});
 
-	//TODO: Add tests for new logic for trimming
-	/*it( 'should set component style correctly', () => {
-		const wrapper = shallow( <Trimmer /> );
+	it( 'should not trim any text', () => {
+		
+		const expectedText = 'Test String';
 
-		const style = {
-			lineHeight: 'inherit',
-			height: 'inherit',
-			maxHeight: 'inherit',
-			width: 'inherit',
-			overflow: 'hidden'
-		};
+		const wrapper = mount(
+			<Trimmer maxLines = {2}>
+				{expectedText}
+			</Trimmer>
+		);
 
-		wrapper.props().style.should.deepEqual( style );
+
+		wrapper.setState({ parentWidth: 200 });
+
+		wrapper.text().trim().should.equal(expectedText);
+	})
+
+	it( 'should correctly trim to 1 line of text', () => {
+
+		const wrapper = mount( 
+			<Trimmer maxLines = {1}>
+				Some very long text that should be trimmed correctly when it is displayed.
+				This text should be on one line.
+			</Trimmer>
+		);
+
+		const expectedText = 'Some very long text that should...';
+
+		wrapper.setState({ parentWidth: 200 });
+
+		wrapper.text().trim().should.equal(expectedText);
 	});
 
-	it( 'should render component dangerously when set', () => {
-		const _html = {
-			__html:  'some text'
-		};
+	it( 'should correctly trim to 5 lines of text', () => {
+		const wrapper = mount( 
+			<Trimmer maxLines = {5}>
+				Some very long text that should be trimmed corr when it is displayed.
+				This text should be on 5 lines and should be truncated. 500s, when an unknown
+				printer took a galley of type and scrambled it to make a type specimen book.
+				It has survived not only five centuries, but also the leap into electronic
+				typesetting, remaining essentially unchanged. It was popularised in the
+				1960s with the release of Letraset sheets containing Lorem Ipsum
+				passages, and more recently with desktop publishing software
+				like Aldus PageMaker including versions of Lorem Ipsum.
+			</Trimmer>
+		);
 
-		const wrapper = mount( <Trimmer dangerouslySetInnerHTML = { _html } /> );
+		const expectedText = 'Some very long text that should be trimmed corr ' +
+		'when it is displayed. This text should be on 5 lines and should be ' +
+		'truncated. 500s, when an unknown printer took...'
 
-		should.exist( wrapper.instance().props.dangerouslySetInnerHTML );
-		wrapper.text().should.equal( _html.__html );
-	});
+		wrapper.setState({ parentWidth: 200 });
 
-	it( 'should trim text when component mounts', () => {
-		const trimStub = sinon.spy( Trimmer.prototype, 'trim' );
-		const wrapper = mount( <Trimmer /> );
-		trimStub.should.be.calledOnce();
-		trimStub.restore();
-	});
+		wrapper.text().trim().should.equal(expectedText);
+		
+	})
 
-	it( 'should trim text when component is updated', () => {
-		const trimStub = sinon.spy( Trimmer.prototype, 'trim' );
-		const wrapper = mount( <Trimmer /> );
-		trimStub.should.be.calledOnce();
-		wrapper.update();
-		trimStub.should.be.calledTwice();
-		trimStub.restore();
-	});*/
-
-	//TODO: Test Trim function
-	// Issue testing dom manipulation
 });

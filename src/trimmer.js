@@ -75,7 +75,7 @@ class TextTrim extends React.Component {
 			let line = textLines.shift();
 			let isLastLine = index === maxLines;
 
-			if ( !line ) {
+			if ( line === undefined ) {
 				didTextFit = true;
 				break;
 			}
@@ -168,7 +168,7 @@ class TextTrim extends React.Component {
 
 		if ( this.state.parentWidth ) {
 			text = this.renderLines()
-		}
+		}	
 
 		return (
 			<div ref = 'trimmer' className = { this.props.className }>

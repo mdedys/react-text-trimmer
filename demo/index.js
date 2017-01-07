@@ -6,7 +6,7 @@ class App extends React.Component {
 	render() {
 
 		const oneLineStyle = {
-			maxWidth: '300px',
+			width: '300px',
 			lineHeight: '1.2em',
 			marginBottom: '50px',
 			fontFamily: 'Arial',
