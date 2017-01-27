@@ -125,6 +125,11 @@ class TextTrim extends React.Component {
 		let newline = '';
 		let tail = isLastLine ? this.props.textTail : '';
 
+		if ( words.length === 1 ) {
+
+			return this.trimByCharacter( words[0], tail );
+		}
+
 		while ( start <= end ) {
 
 			mid = Math.floor( ( start + end ) / 2 );
@@ -148,6 +153,32 @@ class TextTrim extends React.Component {
 			newLine: words.slice( 0, end ).join( ' ' ),
 			leftOverText: words.slice( end, words.length ).join( ' ' )
 		}
+	}
+
+	trimByCharacter( word, tail ) {
+
+		let start = 0;
+		let end = word.length - 1;
+		let mid = 0;
+		let trimmedText = '';
+		let lineLength = 0;
+
+		while ( start <= end ) {
+			mid = Math.floor( ( start + end ) / 2 );
+			trimmedText = word.substring( 0, mid + 1 );
+			lineLength = this.measureText( trimmedText + tail );
+
+			if ( lineLength <= this.state.parentWidth ) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+		}
+
+		return {
+			newLine: word.substring( 0, end ),
+			leftOverText: word.substring( end, word.length - 1 )
+		};
 	}
 
 	updateLinesOfText( linesOfText, newLine, shouldAppendToLine, index ) {

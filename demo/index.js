@@ -29,9 +29,24 @@ class App extends React.Component {
 			overflow: 'hidden'
 		};
 
+		const longWordStyle = {
+			width: '98px',
+			height: '1rem',
+			fontWeight: '400',
+			fontSize: '0.7rem',
+			textAlign: 'left',
+			marginBottom: '50px'
+		}
 
 		return (
 			<div>
+
+				<h1> One Long Word </h1>
+				<div id = 'one-long-word' style = { longWordStyle } >
+					<Trimmer maxLines = { 1 } textTail = '...'>
+						SUBDERMATOGLPHIC
+					</Trimmer>
+				</div>
 
 				<h1> One line of text truncated </h1>
 				<div id = 'one-line-of-style' style = { oneLineStyle } >
