@@ -107,13 +107,7 @@ class TextTrim extends React.Component {
 			linesOfText[linesOfText.length - 1] += this.props.textTail;
 		}
 
-
-		let truncatedText = '';
-		for( let i = 0; i < linesOfText.length; i++ ) {
-			truncatedText += linesOfText[i] + ' '
-		}
-
-		return truncatedText;
+		return linesOfText.join( ' ' );
 	}
 
 	trimLine( line, lineLength, isLastLine ) {
@@ -124,7 +118,7 @@ class TextTrim extends React.Component {
 		let mid = 0;
 		let newline = '';
 		let tail = isLastLine ? this.props.textTail : '';
-		
+
 		while ( start <= end ) {
 
 			mid = Math.floor( ( start + end ) / 2 );
@@ -133,22 +127,38 @@ class TextTrim extends React.Component {
 
 			lineLength = this.measureText( newline + tail );
 
-			if ( lineLength <= this.state.parentWidth ) {
-				start = mid + 1;
-			} else {
-				end = mid - 1;
-			}
-		}
+			if ( lineLength > this.state.parentWidth ) {
 
-		// No words can fit so attempt to trim by character of first word
-		if ( end === -1 ) {
-			
-			let result = this.trimByCharacter( words[0], tail );
-			
-			return {
-				newLine: result.trimmedChars,
-				leftOverText: [result.leftOverChars,...words.slice( 1, words.length )].join( ' ' )
-			}
+				let newWords = newline.split( ' ' );
+				let lastWord = newWords.pop();
+
+				let lastWordLength = this.measureText( lastWord + tail );
+				let lengthToFit = lineLength - this.state.parentWidth;
+
+				// We can fit part of the last word
+				if ( lengthToFit < lastWordLength && isLastLine ) {
+					
+					let truncatedText = newWords.join( ' ' );
+					let result = this.trimByCharacter( lastWord, tail, truncatedText );
+
+					if ( result.trimmedChars === '' ) {
+						newline = newWords.join( ' ' );
+					} else {
+						newline = [...newWords, result.trimmedChars].join( ' ' )
+					}
+
+					return {
+						newLine: newline,
+						leftOverText: [result.leftOverChars, ...words.slice( mid + 1, words.length )].join( ' ' )
+					}
+
+				}
+					
+				end = mid - 1;
+
+			} else {
+				start = mid + 1;
+			} 
 		}
 
 		if ( end === 0 ) {
@@ -161,7 +171,7 @@ class TextTrim extends React.Component {
 		}
 	}
 
-	trimByCharacter( word, tail ) {
+	trimByCharacter( word, tail, truncatedText ) {
 
 		let start = 0;
 		let end = word.length - 1;
@@ -170,8 +180,11 @@ class TextTrim extends React.Component {
 		let lineLength = 0;
 
 		while ( start <= end ) {
+			
 			mid = Math.floor( ( start + end ) / 2 );
-			trimmedText = word.substring( 0, mid + 1 );
+			let trimmedChars = word.substring( 0, mid + 1 );
+			trimmedText = truncatedText + ' ' + trimmedChars
+
 			lineLength = this.measureText( trimmedText + tail );
 
 			if ( lineLength <= this.state.parentWidth ) {
