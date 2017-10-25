@@ -13,7 +13,7 @@ React component that trims overflowing multi line text and adds a specified tail
 Install from NPM:
 
 ```shell
-npm install react-text-trim
+npm install react-text-trimmer
 ```
 
 ## Usage
