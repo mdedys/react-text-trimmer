@@ -27,7 +27,9 @@ class TextTrim extends React.Component {
 
 		window.addEventListener( 'resize', this.resize );
 
-		this.resize();
+		window.setTimeout(()=>{
+            this.resize();   
+        },0)
 	}
 
 	componentWillUnmount() {
