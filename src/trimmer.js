@@ -29,7 +29,7 @@ class TextTrim extends React.Component {
 
 		window.setTimeout(()=>{
             this.resize();   
-        },10)
+        },0)
 	}
 
 	componentWillUnmount() {
