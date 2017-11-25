@@ -1,30 +1,40 @@
-var path = require( 'path' );
-var webpack = require( 'webpack' );
+var path = require('path' );
+var webpack = require('webpack');
+var HtmlWwbpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-	devtool: 'cheap-module-eval-source-map',
+	devtool: 'cheap-module-source-map',
 	entry: [
-		'webpack-hot-middleware/client',
+		'react-hot-loader/patch',
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/only-dev-server',
 		'./demo/index'
 	],
 	output: {
 		path: path.join( __dirname, 'dist' ),
 		filename: 'bundle.js',
-		publicPath: '/static/'
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin()
+
+		new webpack.HotModuleReplacementPlugin(),
+
+		new HtmlWwbpackPlugin({
+				template: 'demo/index.html'
+		})
 	],
 	module: {
-		loaders : [{
-
-			test    : /\.js$/,
-			loaders : [ 'react-hot', 'babel' ],
-			include : [
-				path.join( __dirname, 'src' ),
-				path.join( __dirname, 'demo' )
-			]
-
+		rules: [{
+				use: 'babel-loader',
+				test: /\.js$/,
+				include: [
+						path.join(__dirname, 'src'),
+						path.join(__dirname, 'demo')
+				]
 		}]
+	},
+	devServer: {
+			publicPath: 'http://localhost:8080',
+			historyApiFallback: true,
+			hot: true
 	}
 };

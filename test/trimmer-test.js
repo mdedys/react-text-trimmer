@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { shallow, mount, render } from 'enzyme';
 import sinon from 'sinon';
 import should from 'should';
 import 'should-sinon';
 import Trimmer from '../src/trimmer';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe( '<Trimmer/>', () => {
 
@@ -30,7 +34,7 @@ describe( '<Trimmer/>', () => {
 	});
 
 	it( 'should not trim any text', () => {
-		
+
 		const expectedText = 'Test String';
 
 		const wrapper = mount(
@@ -47,7 +51,7 @@ describe( '<Trimmer/>', () => {
 
 	it( 'should correctly trim to 1 line of text', () => {
 
-		const wrapper = mount( 
+		const wrapper = mount(
 			<Trimmer maxLines = {1}>
 				Some very long text that should be trimmed correctly when it is displayed.
 				This text should be on one line.
@@ -62,7 +66,7 @@ describe( '<Trimmer/>', () => {
 	});
 
 	it( 'should correctly trim to 5 lines of text', () => {
-		const wrapper = mount( 
+		const wrapper = mount(
 			<Trimmer maxLines = {5}>
 				Some very long text that should be trimmed corr when it is displayed.
 				This text should be on 5 lines and should be truncated. 500s, when an unknown
@@ -77,12 +81,12 @@ describe( '<Trimmer/>', () => {
 
 		const expectedText = 'Some very long text that should be trimmed corr ' +
 		'when it is displayed. This text should be on 5 lines and should be ' +
-		'truncated. 500s, when an unknown printer took...'
+		'truncated. 500s, when an unknown printer took a galley of type...'
 
 		wrapper.setState({ parentWidth: 200 });
 
 		wrapper.text().trim().should.equal(expectedText);
-		
+
 	})
 
 });
