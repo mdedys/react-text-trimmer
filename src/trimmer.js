@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import ShortId 				from 'shortid';
+import React from 'react';
+import PropTypes from 'prop-types';
+import ShortId from 'shortid';
 
 class TextTrim extends React.Component {
 
@@ -28,8 +29,8 @@ class TextTrim extends React.Component {
 		window.addEventListener( 'resize', this.resize );
 
 		window.setTimeout(()=>{
-            this.resize();   
-        },0)
+      	this.resize();
+    },0)
 	}
 
 	componentWillUnmount() {
@@ -126,7 +127,7 @@ class TextTrim extends React.Component {
 		let mid = 0;
 		let newline = '';
 		let tail = isLastLine ? this.props.textTail : '';
-		
+
 		while ( start <= end ) {
 
 			mid = Math.floor( ( start + end ) / 2 );
@@ -144,9 +145,9 @@ class TextTrim extends React.Component {
 
 		// No words can fit so attempt to trim by character of first word
 		if ( end === -1 ) {
-			
+
 			let result = this.trimByCharacter( words[0], tail );
-			
+
 			return {
 				newLine: result.trimmedChars,
 				leftOverText: [result.leftOverChars,...words.slice( 1, words.length )].join( ' ' )
@@ -207,7 +208,7 @@ class TextTrim extends React.Component {
 
 		if ( this.state.parentWidth ) {
 			text = this.renderLines()
-		}	
+		}
 
 		return (
 			<div ref = 'trimmer' className = { this.props.className }>
