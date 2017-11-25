@@ -81,7 +81,7 @@ describe( '<Trimmer/>', () => {
 
 		const expectedText = 'Some very long text that should be trimmed corr ' +
 		'when it is displayed. This text should be on 5 lines and should be ' +
-		'truncated. 500s, when an unknown printer took a galley of type...'
+		'truncated. 500s, when an unknown printer took...'
 
 		wrapper.setState({ parentWidth: 200 });
 
