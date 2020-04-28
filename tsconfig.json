@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./demo",
+    "paths": {
+      "~*": ["./*"]
+    },
+    "lib": ["esnext", "dom"],
+    "jsx": "react"
+  },
+  "include": ["demo/**/*", "src/**/*"]
+}
