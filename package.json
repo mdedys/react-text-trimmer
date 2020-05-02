@@ -1,6 +1,6 @@
 {
   "name": "react-text-trimmer",
-  "version": "3.0.0-rc2",
+  "version": "3.0.0-rc3",
   "description": "React component that trims overflowing multi line text and adds a specified tail",
   "main": "dist/index.js",
   "types": "dist/index.d.js",

@@ -16,7 +16,6 @@ jobs:
           steps:
             - run: yarn install
             - run: yarn test
-            - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
             - persist_to_workspace:
                 root: ~/repo
                 paths: .
@@ -30,9 +29,6 @@ jobs:
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run:
-          name: Check ENV
-          command: echo ~/repo/.npmrc
       - run:
           name: Publish Package
           command: npm publish
