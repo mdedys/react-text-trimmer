@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": "./",
+    "paths": {
+      "~*": ["./*"]
+    },
+    "lib": ["esnext", "dom"],
+    "jsx": "react"
+  },
+  "include": ["./**/*"]
+}

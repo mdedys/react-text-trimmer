@@ -7,3 +7,8 @@
 node_modules
 src
 test
+demo
+.cache
+.prettierrc
+tsconfig.json
+yarn.lock
