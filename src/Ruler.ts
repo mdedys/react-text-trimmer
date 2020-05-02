@@ -1,5 +1,5 @@
 export default class Ruler {
-  ruler: CanvasRenderingContext2D
+  ruler: CanvasRenderingContext2D | null = null
 
   constructor() {
     this.init()
@@ -11,11 +11,14 @@ export default class Ruler {
   }
 
   setFont(font: string): void {
-    if (!this.ruler) this.init()
+    if (!this.ruler) return
     this.ruler.font = font
   }
 
-  measure(text: string): TextMetrics {
-    return this.ruler.measureText(text)
+  measure(text: string): number {
+    if (!this.ruler) return -1
+    const result = this.ruler.measureText(text)
+    if (!result) return -1
+    return result.width
   }
 }

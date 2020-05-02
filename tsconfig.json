@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": "./demo",
-    "paths": {
-      "~*": ["./*"]
-    },
-    "lib": ["esnext", "dom"],
+    "lib": ["es2017", "es7", "es6", "dom"],
+    "outDir": "dist",
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "declaration": false,
+    "sourceMap": true,
     "jsx": "react"
   },
-  "include": ["demo/**/*", "src/**/*"]
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "demo"]
 }
