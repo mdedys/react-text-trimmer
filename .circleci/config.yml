@@ -16,8 +16,7 @@ jobs:
           steps:
             - run: yarn install
             - run: yarn test
-            - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-            - run: echo "$(~/repo/.npmrc)"
+            - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
             - persist_to_workspace:
                 root: ~/repo
                 paths: .
