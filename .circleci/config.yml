@@ -1,4 +1,8 @@
 version: 2.1
+
+defaults:
+  working_directory: ~/repo
+
 orbs:
   node: circleci/node@1.1.6
 jobs:
@@ -11,7 +15,32 @@ jobs:
           steps:
             - run: yarn install
             - run: yarn test
+      - persist_to_workspace:
+        root: ~/repo
+        paths: .
+  deploy:
+    executor:
+      name: node/default
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish Package
+          command: npm publish
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+  deploy:
+    jobs:
+      - deploy:
+          requires:
+            - build-and-test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
