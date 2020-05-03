@@ -19,7 +19,7 @@ jobs:
           cache-key: yarn.lock
       - run:
           name: "Copy fonts.conf"
-          command: cp ~/repo/.circleci/fonts.conf ~/.fonts.conf
+          command: sudo mkdir /etc/fonts && sudo cp ~/repo/.circleci/fonts.conf /etc/fonts/fonts.conf
       - run: yarn test
   deploy:
     <<: *defaults
