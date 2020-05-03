@@ -11,14 +11,8 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install
-            - run: yarn test
-            - persist_to_workspace:
-                root: ~/repo
-                paths: .
+      - node/test:
+          version: 13.11.0
   deploy:
     <<: *defaults
     executor:
