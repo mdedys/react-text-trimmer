@@ -57,7 +57,6 @@ export default function (
     const padding =
       parseInt(styles.paddingLeft || "0") + parseInt(styles.paddingRight || "0")
     const maxLineWidth = ref.current.clientWidth - padding
-    console.log("maxLineWidth: ", maxLineWidth)
 
     let textLines = []
     let wordIdx = 0
