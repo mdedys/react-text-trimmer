@@ -12,3 +12,4 @@ demo
 .prettierrc
 tsconfig.json
 yarn.lock
+.circleci
