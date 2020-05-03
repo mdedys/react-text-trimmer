@@ -1,10 +1,10 @@
+# react-text-trimmer
+
 [![NPM version][npm-image]][npm-url]
 [![mdedys](https://circleci.com/gh/mdedys/react-text-trimmer.svg?style=svg)](https://app.circleci.com/pipelines/github/mdedys/react-text-trimmer)
 [![dependencies Status](https://david-dm.org/mdedys/react-text-trimmer/status.svg)](https://david-dm.org/mdedys/react-text-trimmer)
 [![devDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/dev-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=dev)
 [![peerDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/peer-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=peer)
-
-# react-text-trimmer
 
 React component that trims overflowing multi line text and adds a specified tail
 
