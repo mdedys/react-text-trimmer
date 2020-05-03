@@ -6,8 +6,6 @@
 [![devDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/dev-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=dev)
 [![peerDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/peer-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=peer)
 
-React component that trims overflowing multi line text and adds a specified tail
-
 ## Installation
 
 Install from NPM:
