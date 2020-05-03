@@ -9,9 +9,10 @@
     "strictNullChecks": true,
     "removeComments": true,
     "declaration": false,
-    "sourceMap": true,
-    "jsx": "react"
+    "sourceMap": false,
+    "jsx": "react",
+    "esModuleInterop": true
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "demo"]
+  "exclude": ["node_modules", "dist", "tests"]
 }

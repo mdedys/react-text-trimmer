@@ -54,8 +54,10 @@ export default function (
     const font = getFont(styles)
     ruler.setFont(font.join(" "))
 
-    const padding = parseInt(styles.paddingLeft) + parseInt(styles.paddingRight)
+    const padding =
+      parseInt(styles.paddingLeft || "0") + parseInt(styles.paddingRight || "0")
     const maxLineWidth = ref.current.clientWidth - padding
+    console.log("maxLineWidth: ", maxLineWidth)
 
     let textLines = []
     let wordIdx = 0
@@ -74,7 +76,7 @@ export default function (
         const mPrefix = firstLine ? prefix : ""
         const mSuffix = lastLine ? suffix : ""
         const candidate = currentLine + " " + word
-        const lineLength = ruler.measure(mPrefix + candidate + mSuffix)
+        const lineLength = ruler.measure(mPrefix + candidate.trim() + mSuffix)
 
         if (lineLength > maxLineWidth) break
         currentLine = candidate
@@ -83,8 +85,14 @@ export default function (
       textLines.push(currentLine)
     }
 
-    const nextText = textLines.join(" ")
-    setValue(prefix + nextText + suffix)
+    const nextText = textLines.join(" ").trim()
+    if (nextText === text) {
+      setValue(text)
+      return
+    }
+
+    const formatted = prefix + nextText + suffix
+    setValue(formatted)
   }, [words, lines, text, prefix, suffix])
 
   React.useEffect(() => {
