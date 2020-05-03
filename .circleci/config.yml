@@ -11,7 +11,6 @@ jobs:
     <<: *defaults
     executor:
       name: node/default
-      tag: "13"
     steps:
       - checkout
       - node/install-packages:
@@ -22,7 +21,6 @@ jobs:
     <<: *defaults
     executor:
       name: node/default
-      tag: "13"
     steps:
       - attach_workspace:
           at: ~/repo
