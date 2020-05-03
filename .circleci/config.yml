@@ -8,18 +8,21 @@ orbs:
 
 jobs:
   test:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - checkout
-      - node/install:
-          install-yarn: true
-          node-version: latest
-      - run: node --version
-      - run: yarn test
-  deploy:
+    <<: *defaults
     executor:
       name: node/default
+      tag: "13"
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: yarn.lock
+      - run: yarn test
+  deploy:
+    <<: *defaults
+    executor:
+      name: node/default
+      tag: "13"
     steps:
       - attach_workspace:
           at: ~/repo
