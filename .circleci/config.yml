@@ -7,7 +7,7 @@ orbs:
   node: circleci/node@2.0.3
 
 jobs:
-  install-node:
+  test:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -16,6 +16,7 @@ jobs:
           install-yarn: true
           node-version: latest
       - run: node --version
+      - run: yarn test
   deploy:
     executor:
       name: node/default
@@ -32,11 +33,10 @@ jobs:
 workflows:
   test-and-deploy:
     jobs:
-      - install-node
-      - node/test
+      - test
       - deploy:
           requires:
-            - node/test
+            - test
           filters:
             tags:
               only: /^v.*/
