@@ -1,5 +1,5 @@
 [![NPM version][npm-image]][npm-url]
-[![Build status][ci-image]][ci-url]
+[![mdedys](https://circleci.com/gh/mdedys/react-text-trimmer.svg?style=svg)](https://app.circleci.com/pipelines/github/mdedys/react-text-trimmer)
 [![dependencies Status](https://david-dm.org/mdedys/react-text-trimmer/status.svg)](https://david-dm.org/mdedys/react-text-trimmer)
 [![devDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/dev-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=dev)
 [![peerDependencies Status](https://david-dm.org/mdedys/react-text-trimmer/peer-status.svg)](https://david-dm.org/mdedys/react-text-trimmer?type=peer)
@@ -18,24 +18,49 @@ yarn install react-text-trimmer
 
 ## Usage
 
-### Props
+### Options
 
-`className` : _default_ : `empty string` CSS class name to add specific styling
+`lines`: number of lines to truncate text
 
-`textTail` : _default_ : `...` String to append to end of trimmed text
+`prefix`: prefix to attach to beginning of text, default is empty string
 
-`maxLines` : _default_ : `3` Number of lines to render before truncating text
+`suffix`: suffix to attach to end of text, default is ...
 
-### Example
+`interval`: dobounce interval, default is 166
 
-```js
-import Trimmer from "react-text-trim"
+There is two ways to use the text trimmer. One can use the component or the react hook.
 
-;<div className="my-text">
-  <Trimmer maxLines={2} textTail="...">
-    Some text to be truncated
-  </Trimmer>
-</div>
+### Components
+
+Props: 
+
+`options`: TextTrimmerOptions
+
+```javascript
+import TextTrimmer from "react-text-trimmer"
+
+...
+<TextTrimmer>
+  Long text.........
+<TextTrimmer>
+
+...
+
+```
+
+### Hook
+
+```javascript
+import { useTextTrimmer } from "react-text-trimmer"
+
+...
+const ref = React.useRef(null)
+
+const value = useTextTrimmer(text, ref, options)
+
+return <div ref={ref}>{value}</div>
+
+...
 ```
 
 ### Code Style
